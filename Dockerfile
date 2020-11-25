@@ -1,25 +1,18 @@
-ARG BASE_IMAGE_PREFIX
+FROM debian:buster
 
-FROM multiarch/qemu-user-static as qemu
+ENV DEBIAN_FRONTEND noninteractive
 
-FROM ${BASE_IMAGE_PREFIX}alpine
+RUN ( \
+        apt-get update && \
+        apt-get install -y wget procps \
+    )
 
-COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
+RUN ( \
+        apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C208ADDE26C2B797 && \
+        ( echo "deb http://downloads.linux.HPE.com/SDR/repo/mcp/ buster/current non-free" > /etc/apt/sources.list.d/proliant.sources.list ) && \
+        apt-get update && \
+        apt-get install -y ssa \
+    )
 
-ENV PUID=0
-ENV PGID=0
-
-COPY scripts/start.sh /
-
-RUN apk -U --no-cache upgrade
-
-RUN mkdir /config
-RUN chmod -R 777 /start.sh /config
-
-RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
-
-# ports and volumes
-EXPOSE 0
-VOLUME /config
-
-CMD ["/start.sh"]
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
