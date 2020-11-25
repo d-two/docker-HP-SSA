@@ -14,5 +14,6 @@ RUN ( \
         apt-get install -y ssa \
     )
 
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY ./scripts/start.sh /
+
+ENTRYPOINT ["/start.sh"]
