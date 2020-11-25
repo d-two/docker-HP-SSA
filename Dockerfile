@@ -17,4 +17,4 @@ RUN ( \
 COPY scripts/start.sh /
 RUN chmod -R 777 /start.sh
 
-CMD ["/start.sh"]
+ENTRYPOINT ["/start.sh"]
