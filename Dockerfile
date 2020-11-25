@@ -14,6 +14,7 @@ RUN ( \
         apt-get install -y ssa \
     )
 
-COPY ./scripts/start.sh /
+COPY scripts/start.sh /
+RUN chmod -R 777 /start.sh
 
-ENTRYPOINT ["/start.sh"]
+CMD ["/start.sh"]
