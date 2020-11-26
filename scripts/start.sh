@@ -1,3 +1,3 @@
 #!/bin/bash -e
-ssa "$@" &
-wait
+ssa "$@"
+ssa -local
