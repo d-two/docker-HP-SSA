@@ -20,4 +20,6 @@ RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v
   && tar -xzf s6-overlay-amd64.tar.gz -C /usr ./bin \
   && rm -rf s6-overlay-amd64.tar.gz
 
+COPY rootfs /
+
 ENTRYPOINT [ "/init" ]
